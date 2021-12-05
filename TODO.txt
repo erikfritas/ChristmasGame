@@ -1,0 +1,2 @@
+TODO: Criar um sistema de imagem e animação
+      de Entidades em ./Entities_/Base_.py
