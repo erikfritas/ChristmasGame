@@ -1,6 +1,5 @@
 import pygame as pg
 from pygame.locals import *
-
 from modules.utils import collidelist
 
 class EntitiesBase_:
@@ -18,9 +17,10 @@ class EntitiesBase_:
         else:
             img = pg.image.load(self.skin)
             self.render = lambda: self.surface.blit(img, (self.rect[0], self.rect[1]))
+            pg.sprite.LayeredUpdates()
 
     def draw(self):
-        pass
+        self.render()
 
     def update(self):
         pass

@@ -1,6 +1,9 @@
-import math
+import math, hashlib
+from random import randint
 
-from pygame.draw import rect
+
+def generate_random_id():
+    return hashlib.md5(f"asopnm`dasd {randint(0, 255)}-{randint(-255, 255)}".encode("utf-8")).hexdigest()
 
 
 def distance(d1, d2):
@@ -32,7 +35,6 @@ def colliderect(r1, r2, xy=["not", "not"], tolerance=10):
     return xy
 
 
-
 def collidelist(r1, list_, xy=["not", "not"], tolerance=10):
     xy = ["not", "not"]
     for r2 in list_:
@@ -49,3 +51,14 @@ def collidelist(r1, list_, xy=["not", "not"], tolerance=10):
 
     return xy
 
+
+index = 0
+def timer_per_second(secs, func_, fps):
+    global index
+    index += 1
+    if index >= fps * secs:
+        index = 0
+        func_()
+        return True # success
+    else:
+        return False # not, yet :)

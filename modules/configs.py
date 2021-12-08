@@ -1,8 +1,12 @@
 import pygame as pg
 from pygame.locals import *
+import modules.utils as utils
+from random import randint
+
 from Entities_.Player_ import Player_
+from Maps_.MapBase_ import MapBase_
 from Blocks_.Tree_ import Tree_
-# import modules.utils as utils
+from Windows_.Inventory_ import Inventory_
 
 clock = pg.time.Clock()
 
