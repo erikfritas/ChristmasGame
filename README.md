@@ -1,2 +1,2 @@
 # ChristmasGame (DEVELOPING)
-🎅 Celebrating Christmas by developing a little game
+🎅 Celebrating Christmas with the development of this game
