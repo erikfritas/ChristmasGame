@@ -1,2 +1,126 @@
-TODO: Criar um sistema de imagem e animação
-      de Entidades em ./Entities_/Base_.py
+TODO: Criar um jogo baseado em forager e pokemon
+Description: {
+      "O jogo se passa em um tempo futuro onde os robôs dominaram o mundo...",
+      "Mas um vírus os infectou e deixou os do mal...",
+      "Você precisa criar robôs mais fortes para derrotar os robôs do mal... e assim vencer o jogo",
+      Tem que ter: {
+            Compra de mapas tipo forager,
+            Árvores,
+            Pedras,
+            Mirtilo,
+            Animais,
+            Dimensões tipo: {
+                  Idade da pedra,
+                  Era médieval,
+                  Era pandêmica,
+                  Era da Tecnologia,
+                  Era robótica,
+                  Revolução robótica,
+                  Era médieval robótica,
+                  Era pandêmica robótica (atual),
+                  Era pacífica robótica,
+                  Aliens chegam no planeta e começam uma batalha épica
+            },
+            Minérios tipo: {
+                  Carvão,
+                  Ferro,
+                  Cobre,
+                  Ouro,
+                  Tugstênio,
+                  Titânio,
+                  Minérios especiais tipo: {
+                        Esmeralda,
+                        Ruby,
+                        Safira,
+                        Topazio,
+                        Diamante
+                  }
+            },
+            Robôs tipo: {
+                  Lutador tipo: {},
+                  Trabalhador tipo: {},
+                  Treinador tipo: {},
+                  Possuem Poderes tipo: {
+                        Laser (Derreter algo),
+                        Fogo,
+                        Água,
+                        Ácido,
+                        Raio (pode fornecer energia)
+                  },
+            },
+            Quests com npcs robóticos que te dão robôs se você completá-las,
+            Máquinas tipo: {
+                  Fornalha,
+                  Forja,
+                  Fábrica,
+                  Treinar seu Robô
+            }
+      }
+}
+
+TODO: Mapa{
+      Cada [] dentro de self.map terá 50px
+      E cada Number dentro de self.map terá 50px também,
+
+      A taxa de spawn de um bloco será definida de acordo
+      como bioma, por exemplo: {
+            Árvore = 50%
+            Pedra = 40%
+
+      }
+}
+
+TODO: Sistema de inventário
+Description: {
+      Pode guardar itens e colocar itens à venda
+}
+
+TODO: Itens com funcionalidades específicas
+Description: {
+      Por exemplo: {
+            Picareta de alguma coisa,
+            Espada de alguma coisa (por exemplo: Espada de Ferro),
+            Pá de alguma coisa,
+            Martelo de alguma coisa,
+            Arco,
+            flechas,
+            Poções,
+            Carne de um animal,
+            Mirtilo,
+            Couro,
+            etc...
+      }
+}
+
+TODO: Sistema de craft
+Description: {
+      Workbenchs serão necessárias, tipo: {
+            Workbench lv 1 ao 5,
+            Fornalha lv 1 ao 5,
+            Forja lv 1 ao 5,
+            Fábrica lv 1 ao 5 (para robôs trabalhadores),
+            etc...
+      }
+}
+
+TODO: Sistema de construção
+Description: {
+      Pode se construir e destruir algo
+}
+
+DONE: Sistema de colisão
+Description: {
+      Criar um sistema de colisão de muitos rects
+}
+
+TODO: Sistema de imagem e animação
+Description: {
+      Criar um sistema de imagem e
+      animação Entidades em ./Entities_/Base_.py
+}
+
+DONE: Pygame timer to do
+Description: {
+      Criar um sistema de timer para realizar
+      uma ação em um tempo específico
+}
