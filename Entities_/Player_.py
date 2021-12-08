@@ -18,10 +18,8 @@ class Player_(EntitiesBase_):
                     self.rect[0] = self.keys['tomove'][e](self.rect[0], self.keys['speed'])
 
     def keyevent(self, e):
-        if e.type == KEYDOWN:
+        if e.type in [KEYDOWN, KEYUP]:
             if e.key in self.keys['move'].keys():
-                self.keys['move'][e.key]['is'] = True
-        
-        if e.type == KEYUP:
-            if e.key in self.keys['move'].keys():
-                self.keys['move'][e.key]['is'] = False
+                self.keys['move'][e.key]['is'] = e.type == KEYDOWN
+            if e.key in self.keys['actions'].keys():
+                self.keys['actions'][e.key]['is'] = e.type == KEYDOWN

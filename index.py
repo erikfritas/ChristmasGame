@@ -23,6 +23,9 @@ class Game:
                         K_a: lambda x, speed: x - speed,
                         K_d: lambda x, speed: x + speed
                     },
+                    "actions": {
+                        K_e: {'is': False, 'act': lambda: print('open inventory')}
+                    },
                     "speed": 5
                 },
                 types={

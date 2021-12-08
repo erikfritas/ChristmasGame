@@ -21,7 +21,7 @@ class BaseWindow_:
                         self.render["ui"][r_ui['id']] = lambda: pg.draw.rect(surface, s_ui, r_ui['rect'])
                 else:
                     for r_ui in self.rects["ui"]:
-                        self.render["ui"][r_ui['id']] = lambda: surface.blit(pg.image.load(s_ui), r_ui['rect'])
+                        self.render["ui"][r_ui['id']] = lambda: surface.blit(pg.image.load(s_ui), (r_ui['rect'][0], r_ui['rect'][1]))
 
         else:
             self.skins["window"] = pg.image.load(self.skins["window"])
@@ -30,7 +30,7 @@ class BaseWindow_:
     def draw(self):
         self.render["window"]()
         for ui in self.render["ui"]:
-            self.render["ui"][ui]
+            self.render["ui"][ui]()
 
     def update(self):
         self.mouse_pos = pg.mouse.get_pos()
