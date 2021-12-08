@@ -10,24 +10,6 @@ class Game:
         self.objs = [
             [
                 Player_(screen, "Player 1", [200, 200, 50, 50], skin=(255, 255, 255),
-                keys={
-                    "move": {
-                        K_w: {'is': False, 'pos': 'y', 'side': 'top'},
-                        K_s: {'is': False, 'pos': 'y', 'side': 'bottom'},
-                        K_a: {'is': False, 'pos': 'x', 'side': 'left'},
-                        K_d: {'is': False, 'pos': 'x', 'side': 'right'}
-                    },
-                    "tomove": {
-                        K_w: lambda y, speed: y - speed,
-                        K_s: lambda y, speed: y + speed,
-                        K_a: lambda x, speed: x - speed,
-                        K_d: lambda x, speed: x + speed
-                    },
-                    "actions": {
-                        K_e: {'is': False, 'act': lambda: print('open inventory')}
-                    },
-                    "speed": 5
-                },
                 types={
                     'collider': True
                 })
@@ -40,22 +22,7 @@ class Game:
             [], # npcs
             [], # enemies
             [], # hostile mobs
-            [
-                Inventory_(screen, rects={
-                    'window': [SCREEN["sw"]()*.25, SCREEN["sh"]()*.25, SCREEN["sw"]()*.5, SCREEN["sh"]()*.5],
-                    'ui': [
-                        {
-                            'id': utils.generate_random_id(),
-                            'rect': [250, 250, 50, 50]
-                        }
-                    ]
-                }, skins={
-                    'window': (100, 100, 110),
-                    'ui': [
-                        (50, 50, 150)
-                    ]
-                })
-            ] # Windows
+            [] # Windows
         ]
 
         self.entities = self.objs[0] + self.objs[3]

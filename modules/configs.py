@@ -1,5 +1,6 @@
 import pygame as pg
 from pygame.locals import *
+from os import environ
 import modules.utils as utils
 from random import randint
 
@@ -10,11 +11,17 @@ from Windows_.Inventory_ import Inventory_
 
 clock = pg.time.Clock()
 
-# WINDOW
-WINDOW_SIZE = [800, 400]
-screen = pg.display.set_mode(WINDOW_SIZE, RESIZABLE)
+environ['SDL_VIDEO_CENTERED'] = '1'
 
 pg.init()
+
+info = pg.display.Info()
+
+# WINDOW
+WINDOW_SIZE = [info.current_w, info.current_h-50]
+screen = pg.display.set_mode(WINDOW_SIZE)
+
+
 
 # Fonts
 fonte_size_default = 0
