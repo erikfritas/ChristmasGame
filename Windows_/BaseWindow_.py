@@ -40,11 +40,21 @@ class BaseWindow_:
         self.save_window = [self.render["window"], True]
         self.save_uis = self.render["ui"].copy()
         self.is_open = False
+        self.border = lambda: ''
+        self.border_color = None
 
     def draw(self):
+        if self.border_color == None:
+            self.border_hover = lambda a, b, c, d: ''
+
         self.render["window"]()
         for ui in self.render["ui"]:
             self.render["ui"][ui][2](self.render["ui"][ui][1], self.render["ui"][ui][0])
+            self.border_hover(ui, self.border_color, self.render["ui"][ui][0], 5)
+        self.border()
+    
+    def draw_border(self, color, rect, border_size):
+        self.border = lambda: pg.draw.rect(self.surface, color, rect, border_size)
 
     def update(self):
         pass
@@ -97,3 +107,6 @@ class BaseWindow_:
     def on_hover_ui(self, ui_id, action):
         if pg.Rect(self.get_ui_rect_by_id(ui_id)).collidepoint(pg.mouse.get_pos()):
             action()
+    
+    def border_hover(self, ui_id, color, rect, bd_size):
+        self.on_hover_ui(ui_id, lambda: self.draw_border(color, rect, bd_size))

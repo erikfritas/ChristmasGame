@@ -22,7 +22,6 @@ WINDOW_SIZE = [info.current_w, info.current_h-50]
 screen = pg.display.set_mode(WINDOW_SIZE)
 
 
-
 # Fonts
 fonte_size_default = 0
 

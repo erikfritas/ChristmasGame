@@ -41,7 +41,7 @@ class Player_(EntitiesBase_):
                 3: {
                     'is': False,
                     'act_down': lambda: self.windows['inventory'].ohf_click(4), # ongrab
-                    'act_hold': lambda: '', #self.windows['inventory'].ohf_click(5), # onholdgrab
+                    'act_hold': lambda: self.windows['inventory'].ohf_click(5), # onholdgrab
                     'act_up': lambda: self.windows['inventory'].ohf_click(6) # offgrab
                 }
             },

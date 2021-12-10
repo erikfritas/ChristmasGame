@@ -1,6 +1,7 @@
 import pygame as pg
 from pygame.locals import *
 from Windows_.BaseWindow_ import BaseWindow_
+from Windows_.ItemMenu_ import ItemMenu_
 from modules import utils
 
 class Inventory_(BaseWindow_):
@@ -38,25 +39,62 @@ class Inventory_(BaseWindow_):
                 'skin': (250, 50, 50)
             }
         ])
+        self.item_info = 'item'
+        self.ItemMenu = ItemMenu_(surface, self.SCREEN)
+        self.render_menu = lambda: ''
+        self.grabing_rect = ''
+        self.border_color = (20, 20, 25)
+
+    def draw(self):
+        super().draw()
+        self.render_menu()
+
+    def update(self):
+        pass
 
     def set_bag_slots(self, slots):
         if len(slots) > self.bag_size[0] + self.bag_size[1]:
             raise Exception('slots\'re full -> set_bag_slots() error in Inventory_.py') # for python 3.8+
 
-        slot_functs = [
-            lambda: print('onclick: item'),
-            lambda: print('onhold: item'),
-            lambda: print('offclick: item (aparecerá o menu do item)'),
-            lambda: print('ongrab: item (transforma a posição (x,y) desse rect na posição (x,y) do mouse)'),
-            lambda: print('onholdgrab: item'),
-            lambda: print('offgrab: item (troca os itens de lugar)'),
+        def set_menu(i):
+            if type(i) is not str:
+                self.render_menu = lambda: self.ItemMenu.draw(i['item'])
+            else:
+                self.render_menu = lambda: ''
+            if type(self.grabing_rect) is not str:
+                self.render['ui'][i['id']][0] = self.render['ui'][i['id']][-1].copy()
+                self.grabing_rect = ''
 
-            lambda: print('onclick: empty'),
-            lambda: print('onhold: empty'),
-            lambda: print('offclick: empty'),
-            lambda: print('ongrab: empty'),
-            lambda: print('onholdgrab: empty'),
-            lambda: print('offgrab: empty (troca a posição do item para essa posição que está vazia)')
+        def set_grabing(i):
+            self.grabing_rect = [self.render['ui'][i['id']][-1].copy(), i['id']]
+            width = int(self.grabing_rect[0][2]/2)
+            height = int(self.grabing_rect[0][3]/2)
+            self.render['ui'][i['id']][0][0] = pg.mouse.get_pos()[0]-width
+            self.render['ui'][i['id']][0][1] = pg.mouse.get_pos()[1]-height
+            self.render_menu = lambda: set_grabing(i)
+
+        def change_grab(id_):
+            if type(self.grabing_rect) is list and self.render['ui'][self.grabing_rect[1]].copy() != self.grabing_rect[0].copy():
+                self.render['ui'][self.grabing_rect[1]][0] = self.render['ui'][id_][-1].copy()
+                self.render['ui'][self.grabing_rect[1]][-1] = self.render['ui'][id_][-1].copy()
+                self.render['ui'][id_][0] = self.grabing_rect[0].copy()
+                self.render['ui'][id_][-1] = self.grabing_rect[0].copy()
+                self.grabing_rect = ''
+
+        slot_functs = [
+            lambda i: lambda: '', # onclick: item
+            lambda i: lambda: '', # onhold: item,
+            lambda i: lambda: set_menu(i[0]), # offclick: item (menu do item aparece) e (volta os itens ao seus lugares)
+            lambda i: lambda: '', # ongrab: item,
+            lambda i: lambda: set_grabing(i[0]), # onholdgrab: item (a posição (x,y) desse rect = (x,y) do mouse)
+            lambda i: lambda: '', # offgrab: item
+
+            lambda i: lambda: change_grab(i), # onclick: empty (troca a posição do item para essa posição)
+            lambda i: lambda: '', # onhold: empty,
+            lambda i: lambda: set_menu(i), # offclick: empty (menu desaparece)
+            lambda i: lambda: '', # ongrab: empty,
+            lambda i: lambda: '', # onholdgrab: empty,
+            lambda i: lambda: '' # offgrab: empty
         ]
 
         slot_i, slot_gap= 0, self.SCREEN["sw"]()*.0365
@@ -66,26 +104,30 @@ class Inventory_(BaseWindow_):
                     (self.SCREEN["sw"]()*.1-slot_gap)+((slot_gap*2)*(w_slot+1)),
                     (self.SCREEN["sh"]()*.1-slot_gap)+((slot_gap*2)*(h_slot+1)), slot_gap, slot_gap])
                 if len(slots) > slot_i:
-                    self.bag[h_slot][w_slot] = slots[slot_i]['item']
+                    name = [slots[slot_i], slot_rect]
+                    self.bag[h_slot][w_slot] = name[0]['item']
                     self.create_ui({
                         slots[w_slot]['id']: [
                             slot_rect,
                             slots[w_slot]['skin'],
                             lambda s, r: pg.draw.rect(self.surface, s, r),
-                            slot_functs[0], slot_functs[1], slot_functs[2],
-                            slot_functs[3], slot_functs[4], slot_functs[5]
+                            slot_functs[0](name), slot_functs[1](name), slot_functs[2](name),
+                            slot_functs[3](name), slot_functs[4](name), slot_functs[5](name),
+                            slot_rect.copy() # original position
                         ]
                     })
                     slot_i += 1
                 else:
                     self.bag[h_slot][w_slot] = []
+                    name = utils.generate_random_id()
                     self.create_ui({
-                        utils.generate_random_id(): [
+                        name: [
                             slot_rect,
                             (150, 50, 50),
                             lambda s, r: pg.draw.rect(self.surface, s, r),
-                            slot_functs[6], slot_functs[7], slot_functs[8],
-                            slot_functs[9], slot_functs[10], slot_functs[11]
+                            slot_functs[6](name), slot_functs[7](name), slot_functs[8](name),
+                            slot_functs[9](name), slot_functs[10](name), slot_functs[11](name),
+                            slot_rect.copy() # original position
                         ]
                     })
 
@@ -97,6 +139,3 @@ class Inventory_(BaseWindow_):
             self.bag.append([])
             for w_slot in range(0, self.bag_size[0]):
                 self.bag[h_slot].append([])
-
-    def update(self):
-        pass
