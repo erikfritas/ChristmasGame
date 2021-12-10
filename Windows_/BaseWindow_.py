@@ -37,40 +37,36 @@ class BaseWindow_:
         self.is_open = False
 
     def draw(self):
-        self.render["window"]()
-        for ui in self.render["ui"]:
-            self.render["ui"][ui][2](self.render["ui"][ui][1], self.render["ui"][ui][0])
+        pass
 
     def update(self):
         self.mouse_pos = pg.mouse.get_pos()
     
     def open_window(self):
-        if not self.is_open and self.save_uis != {} and self.save_window[1]:
-            self.is_open = True
-            self.render["window"] = self.save_window[0]
-            self.render["ui"] = self.save_uis
-            self.save_window = [self.render["window"], False]
-            self.save_uis = {}
+        self.is_open = True
+        self.render["window"] = self.save_window[0]
+        self.render["ui"] = self.save_uis
+        self.save_window = [self.render["window"], False]
+        self.save_uis = {}
 
     def close_window(self):
-        if self.is_open and self.save_uis == {} and not self.save_window[1]:
-            self.is_open = False
-            self.save_window = [self.render["window"], True]
-            self.save_uis = self.render["ui"]
-            self.render["window"] = lambda: ''
-            self.render["ui"] = {}
+        self.is_open = False
+        self.save_window = [self.render["window"], True]
+        self.save_uis = self.render["ui"]
+        self.render["window"] = lambda: ''
+        self.render["ui"] = {}
 
     def get_is_open(self):
         return self.is_open
 
-    def create_ui(self, ui_skin, ui_rect):
-        # (r, g, b) or "image_name.png"
-        self.skins["ui"].append(ui_skin)
-
-        # {'id': [pg.Rect([x, y, w, h]), skin, lambda s, r: pg.draw.rect(surface, s, r)]}
+    def create_ui(self, ui):
+        # {'id': [pg.Rect([x, y, w, h]), skin=(r, g, b) or "image_name.png", lambda s, r: pg.draw.rect(surface, s, r)]}
         # or
         # {'id': [pg.Rect([x, y, w, h]), skin, lambda s, r: surface.blit(s, (r[0], r[1]))]}
-        self.rects["ui"].append(ui_rect)
+
+        for u in ui:
+            self.render["ui"][u] = ui[u]
+            self.save_uis = self.render["ui"].copy()
 
     def get_window_rect(self):
         return self.rects["window"]

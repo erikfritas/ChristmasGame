@@ -8,24 +8,28 @@ class Game:
         self.fps = text(fonte("Arial", 20), f'{int(clock.get_fps())}')
 
         self.objs = [
-            [
-                Player_(screen, "Player 1", [200, 200, 50, 50], skin=(255, 255, 255),
-                types={
-                    'collider': True
-                })
-            ], # players
-            [
-                Tree_(screen, [10, 10, 100, 100], (150, 50, 50), types={}),
-                Tree_(screen, [400, 400, 100, 100], (150, 50, 50), types={}),
-                Tree_(screen, [-30, 150, 100, 100], (150, 50, 50), types={})
-            ], # blocks
-            [], # npcs
-            [], # enemies
-            [], # hostile mobs
-            [] # Windows
+            [ # z-index: 0 == blocks
+                [
+                    Tree_(screen, [10, 10, 100, 100], (150, 50, 50), types={}),
+                    Tree_(screen, [400, 400, 100, 100], (150, 50, 50), types={}),
+                    Tree_(screen, [-30, 150, 100, 100], (150, 50, 50), types={})
+                ] # blocks
+            ],
+            [ # z-index: 1 == entities
+                [
+                    Player_(screen, "Player 1", [200, 200, 50, 50], skin=(255, 255, 255),
+                    types={
+                        'collider': True
+                    })
+                ], # players
+                [], # npcs
+                [], # enemies
+                [] # hostile mobs
+            ],
+            [ # z-index: 2 == windows
+                [] # windows
+            ]
         ]
-
-        self.entities = self.objs[0] + self.objs[3]
 
     def draw(self):
         screen.fill((0, 0, 10))
@@ -34,7 +38,8 @@ class Game:
 
         for obj in self.objs:
             for o in obj:
-                o.draw()
+                for z_index in o:
+                    z_index.draw()
 
     def update(self):
         clock.tick(58)
@@ -44,13 +49,14 @@ class Game:
                 pg.quit()
                 exit()
 
-            for player in self.objs[0]:
+            for player in self.objs[1][0]:
                 player.keyevent(e)
 
-        for entity in self.entities:
-            entity.set_collideds(self.objs[1])
+        for entity in self.objs[1]:
+            for obj in entity:
+                obj.set_collideds(self.objs[0][0])
 
-        for update in self.objs:
+        for update in self.objs[0] + self.objs[1] + self.objs[2]:
             for el in update:
                 el.update()
 

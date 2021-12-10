@@ -31,13 +31,6 @@ class EntitiesBase_:
     def update(self):
         pass
 
-    def set_collided(self, objs):
-        for obj in objs:
-            self.xy = obj.get_collided(pg.Rect(self.rect), self.xy)
-
-            if self.xy != ["not", "not"]:
-                break
-
     def set_collideds(self, objs):
         rects = []
         for obj in objs:
@@ -48,12 +41,12 @@ class EntitiesBase_:
     def open_window(self, name):
         if not self.windows[name].get_is_open():
             self.windows[name].open_window()
-            print('open')
+            #print('open')
 
     def close_window(self, name):
         if self.windows[name].get_is_open():
             self.windows[name].close_window()
-            print('close')
+            #print('close')
 
     def handle_windows(self, name, mousedown):
         if not mousedown and not self.handled_window:
