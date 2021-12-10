@@ -1,4 +1,3 @@
-from os import lseek
 import pygame as pg
 from pygame.locals import *
 
@@ -20,13 +19,19 @@ class BaseWindow_:
                     self.render["ui"][r_ui['id']] = [
                         pg.Rect(r_ui['rect']),
                         s_ui,
-                        lambda s, r: pg.draw.rect(surface, s, r)
+                        lambda s, r: pg.draw.rect(surface, s, r),
+                        lambda: print('onclick: item'),
+                        lambda: print('onhold: item'),
+                        lambda: print('offclick: item')
                     ]
                 else:
                     self.render["ui"][r_ui['id']] = [
                         pg.Rect(r_ui['rect']),
                         pg.image.load(s_ui),
-                        lambda s, r: surface.blit(s, (r[0], r[1]))
+                        lambda s, r: surface.blit(s, (r[0], r[1])),
+                        lambda: print('onclick: item'),
+                        lambda: print('onhold: item'),
+                        lambda: print('offclick: item')
                     ]
         else:
             self.skins["window"] = pg.image.load(self.skins["window"])
@@ -37,10 +42,12 @@ class BaseWindow_:
         self.is_open = False
 
     def draw(self):
-        pass
+        self.render["window"]()
+        for ui in self.render["ui"]:
+            self.render["ui"][ui][2](self.render["ui"][ui][1], self.render["ui"][ui][0])
 
     def update(self):
-        self.mouse_pos = pg.mouse.get_pos()
+        pass
     
     def open_window(self):
         self.is_open = True
@@ -72,16 +79,21 @@ class BaseWindow_:
         return self.rects["window"]
 
     def get_ui_rect_by_id(self, id_):
-        for ui in self.rects["ui"]:
-            if ui["id"] == id_:
-                return ui
+        for ui_id in self.render["ui"]:
+            if ui_id == id_:
+                return self.render["ui"][ui_id][0]
 
-    def on_click_window(self, action):
-        if pg.Rect(self.rects["window"]).collidepoint(self.mouse_pos):
-            action()
-            print('window: colided with mouse')
+        raise Exception(f"This id_ ({id_}) not exists in uis")
 
-    def on_click_ui(self, ui_id, action):
-        if pg.Rect(self.get_ui_rect_by_id(ui_id)).collidepoint(self.mouse_pos):
+    # CLICK, HOLD or OFF
+    def ohf_click(self, on_, limit=2):
+        for ui_id in self.render["ui"]:
+            self.on_hover_ui(ui_id, self.render["ui"][ui_id][on_+limit])
+
+    def on_hover_window(self, action):
+        if pg.Rect(self.render["window"]).collidepoint(pg.mouse.get_pos()):
             action()
-            print('ui: colided with mouse')
+
+    def on_hover_ui(self, ui_id, action):
+        if pg.Rect(self.get_ui_rect_by_id(ui_id)).collidepoint(pg.mouse.get_pos()):
+            action()

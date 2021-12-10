@@ -31,10 +31,25 @@ class Player_(EntitiesBase_):
                     'act_up': lambda: self.handle_windows('inventory', False)
                 }
             },
+            "mouse": {
+                1: {
+                    'is': False,
+                    'act_down': lambda: self.windows['inventory'].ohf_click(1), # onclick
+                    'act_hold': lambda: '', #self.windows['inventory'].ohf_click(2), # onhold
+                    'act_up': lambda: self.windows['inventory'].ohf_click(3) # offclick
+                },
+                3: {
+                    'is': False,
+                    'act_down': lambda: self.windows['inventory'].ohf_click(4), # ongrab
+                    'act_hold': lambda: '', #self.windows['inventory'].ohf_click(5), # onholdgrab
+                    'act_up': lambda: self.windows['inventory'].ohf_click(6) # offgrab
+                }
+            },
             "speed": 5
         }
 
-        self.wait_for_click = False
+        self.wait_for_click = ['key', False]
+        self.wait_for_m_click = ['key', False]
 
     def update(self):
         for e in self.keys['move'].keys():
@@ -47,12 +62,20 @@ class Player_(EntitiesBase_):
         for e in self.keys['actions'].keys():
             if self.keys['actions'][e]['is']:
                 self.keys['actions'][e]['act_down']()
-                self.wait_for_click = True
-                #print('down')
-            elif not self.keys['actions'][e]['is'] and self.wait_for_click:
+                self.wait_for_click = [e, True]
+            elif not self.keys['actions'][e]['is'] and e == self.wait_for_click[0] and self.wait_for_click[1]:
                 self.keys['actions'][e]['act_up']()
-                self.wait_for_click = False
-                #print('up')
+                self.wait_for_click = [e, False]
+        
+        for e in self.keys['mouse'].keys():
+            if self.keys['mouse'][e]['is'] and not self.wait_for_m_click[1]:
+                self.keys['mouse'][e]['act_down']()
+                self.wait_for_m_click = [e, True]
+            elif self.keys['mouse'][e]['is'] and e == self.wait_for_m_click[0]:
+                self.keys['mouse'][e]['act_hold']()
+            elif not self.keys['mouse'][e]['is'] and e == self.wait_for_m_click[0] and self.wait_for_m_click[1]:
+                self.keys['mouse'][e]['act_up']()
+                self.wait_for_m_click = [e, False]
 
         for name in self.windows.keys():
             if self.windows[name].get_is_open():
@@ -65,3 +88,7 @@ class Player_(EntitiesBase_):
                 self.keys['move'][e.key]['is'] = e.type == KEYDOWN
             if e.key in self.keys['actions'].keys():
                 self.keys['actions'][e.key]['is'] = e.type == KEYDOWN
+        
+        if e.type in [MOUSEBUTTONDOWN, MOUSEBUTTONUP]:
+            if e.button in self.keys['mouse'].keys():
+                self.keys['mouse'][e.button]['is'] = e.type == MOUSEBUTTONDOWN
