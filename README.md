@@ -4,3 +4,5 @@
 <hr>
 
 <p>You can also use this engine to create your game too, just empty the arrays in self.objs which is in the index.py file</p>
+
+<p>"December 9 21:39": Inventory system part 1</p>
