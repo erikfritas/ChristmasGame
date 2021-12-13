@@ -21,7 +21,7 @@ Description: {
       uma ação em um tempo específico
 }
 
-TODO: Menu do Item
+Almost done: Menu do Item
 Description: {
       Nome do item,
       Descrição,
@@ -31,6 +31,11 @@ Description: {
             Poções,
             Comidas,
             Armaduras
+      },
+
+      callbacks: {
+            FILE: ItemMenu,
+            inside function: set_info()
       }
 }
 
