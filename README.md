@@ -8,7 +8,8 @@
 <p>"December 9 21:39": Inventory system part 1 -> "Frontend"</p>
 <p>"December 9 21:39": Inventory system part 2 -> "Click and Grab System part 1"</p>
 <p>"December 10 19:35": Inventory system part 3 -> "Click and Grab System 95% complete"</p>
-<p>TODO: <a href="./TODO.txt">open the todo file</a></p>
+<p>"December 12 23:02": Inventory system part 4 -> "ItemMenu 75% completed (button system added in it)"</p>
+<p>TODO File: <a href="./TODO.txt">open</a></p>
 
 
 <footer>by &copy; <a href="https://github.com/erikfritas">@erikfritas</a></footer>
