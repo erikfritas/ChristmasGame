@@ -85,6 +85,10 @@ class BaseWindow_:
             self.render["ui"][u] = ui[u]
             self.save_uis = self.render["ui"].copy()
 
+    def remove_ui(self, ui_id):
+        self.render["ui"].pop(ui_id)
+        self.save_uis = self.render["ui"].copy()
+
     def get_window_rect(self):
         return self.rects["window"]
 

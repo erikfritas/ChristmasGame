@@ -30,12 +30,40 @@ class Inventory_(BaseWindow_):
         self.set_bag_slots([
             {
                 'id': utils.generate_random_id(),
-                'item': 'Sword',
+                'item': {
+                    'title': 'Wood Sword',
+                    'description': 'Uma espada de madeira, bem fácil de fazer :)',
+                    'pros': [
+                        'ATTACK POWER: 3',
+                        'BREAK POWER: 1'
+                    ],
+                    'contras': [
+                        'DEFENSE: -1',
+                        'ATTACK SPEED: 1'
+                    ],
+                    'use': True,
+                    'using': True,
+                    'sell': 3
+                },
                 'skin': (250, 50, 50)
             },
             {
                 'id': utils.generate_random_id(),
-                'item': 'Pickaxe',
+                'item': {
+                    'title': 'Wood Pickaxe',
+                    'description': 'Uma picareta de madeira, bem fácil de fazer :)',
+                    'pros': [
+                        'ATTACK POWER: 1',
+                        'BREAK POWER: 3'
+                    ],
+                    'contras': [
+                        'DEFENSE: -1',
+                        'ATTACK SPEED: 1'
+                    ],
+                    'use': True,
+                    'using': False,
+                    'sell': 4
+                },
                 'skin': (250, 50, 50)
             }
         ])
@@ -52,13 +80,18 @@ class Inventory_(BaseWindow_):
     def update(self):
         pass
 
+    def get_itemMenu(self):
+        return self.ItemMenu
+
     def set_bag_slots(self, slots):
         if len(slots) > self.bag_size[0] + self.bag_size[1]:
             raise Exception('slots\'re full -> set_bag_slots() error in Inventory_.py') # for python 3.8+
 
         def set_menu(i):
+            self.ItemMenu.set_info('')
             if type(i) is not str:
-                self.render_menu = lambda: self.ItemMenu.draw(i['item'])
+                self.ItemMenu.set_info(i['item'])
+                self.render_menu = lambda: self.ItemMenu.draw()
             else:
                 self.render_menu = lambda: ''
             if type(self.grabing_rect) is not str:

@@ -27,7 +27,61 @@ class ItemMenu_(BaseWindow_):
 
         super().__init__(surface, rects, skins)
 
-    def draw(self, item_information):
+        self.infos = []
+        self.info_pc = []
+
+    def draw(self):
         super().draw()
-        info = text(fonte('Consolas', 20), item_information)
-        self.surface.blit(info, (self.rects['window'][0], self.rects['window'][1]))
+
+        for i in self.infos:
+            i()
+
+        for i in self.info_pc:
+            i()
+
+    def set_info(self, info):
+        if type(info) is dict:
+            def column(i, gap=0):
+                w = self.rects['window'][0] + int(self.rects['window'][2]/2) - int(i.get_width()/2)
+                h = self.rects['window'][1] + 50 + gap
+                return lambda: self.surface.blit(i, (w, h))
+
+            self.infos = [
+                column(text(fonte('Consolas', 35), info['title'])),
+                column(text(fonte('Consolas', 18), info['description']), 50)
+            ]
+
+            def row(i, act, gap=0):
+                w = self.rects['window'][0] + int(self.rects['window'][2]/2) + int(i.get_width()/2) - gap - 80
+                h = self.rects['window'][1] + 150
+                self.get_btn(i, w, h, act)
+                return lambda: self.surface.blit(i, (w, h))
+
+            self.info_pc = [
+                row(text(fonte('Consolas', 22), f"SELL: +{info['sell']} $"), lambda: print(f"SELL: +{info['sell']} $"))
+            ]
+            if info['use']:
+                self.info_pc.append(row(text(fonte('Consolas', 22), 'USE'), lambda: print('use'), 30))
+        else:
+            uis = self.render['ui'].copy()
+            for i in uis:
+                self.remove_ui(i)
+
+    def get_btn(self, txt_obj, w, h, click_btn):
+        id_ = utils.generate_random_id()
+        rect_ = [
+            w - 5,
+            h - 5,
+            txt_obj.get_width() + 10,
+            txt_obj.get_height() + 10
+        ]
+
+        self.create_ui({
+            id_: [
+                rect_,
+                (50, 50, 250),
+                lambda s, r: pg.draw.rect(self.surface, s, r),
+                click_btn,
+                rect_.copy() # original position
+            ]
+        })

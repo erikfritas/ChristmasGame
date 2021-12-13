@@ -2,60 +2,7 @@ TODO: Criar um jogo baseado em forager e pokemon
 Description: {
       "O jogo se passa em um tempo futuro onde os robôs dominaram o mundo...",
       "Mas um vírus os infectou e deixou os do mal...",
-      "Você precisa criar robôs mais fortes para derrotar os robôs do mal... e assim vencer o jogo",
-      Tem que ter: {
-            Compra de mapas tipo forager,
-            Árvores,
-            Pedras,
-            Mirtilo,
-            Animais,
-            Dimensões tipo: {
-                  Idade da pedra,
-                  Era médieval,
-                  Era pandêmica,
-                  Era da Tecnologia,
-                  Era robótica,
-                  Revolução robótica,
-                  Era médieval robótica,
-                  Era pandêmica robótica (atual),
-                  Era pacífica robótica,
-                  Aliens chegam no planeta e começam uma batalha épica
-            },
-            Minérios tipo: {
-                  Carvão,
-                  Ferro,
-                  Cobre,
-                  Ouro,
-                  Tugstênio,
-                  Titânio,
-                  Minérios especiais tipo: {
-                        Esmeralda,
-                        Ruby,
-                        Safira,
-                        Topazio,
-                        Diamante
-                  }
-            },
-            Robôs tipo: {
-                  Lutador tipo: {},
-                  Trabalhador tipo: {},
-                  Treinador tipo: {},
-                  Possuem Poderes tipo: {
-                        Laser (Derreter algo),
-                        Fogo,
-                        Água,
-                        Ácido,
-                        Raio (pode fornecer energia)
-                  },
-            },
-            Quests com npcs robóticos que te dão robôs se você completá-las,
-            Máquinas tipo: {
-                  Fornalha,
-                  Forja,
-                  Fábrica,
-                  Treinar seu Robô
-            }
-      }
+      "Você precisa criar robôs mais fortes para derrotar os robôs do mal... e assim vencer o jogo"
 }
 
 DONE: Sistema de colisão
@@ -90,7 +37,7 @@ Description: {
 TODO: Status Bar
 Description: {
       Corações,
-      Comida,
+      Energia,
       Magia,
       Level,
       Scroll item (item que está usando nesse momento, pode scrollar para mudar de item)
@@ -121,7 +68,6 @@ TODO: Mapa{
       como bioma, por exemplo: {
             Árvore = 50%
             Pedra = 40%
-
       }
 }
 
@@ -145,4 +91,58 @@ TODO: Sistema de imagem e animação
 Description: {
       Criar um sistema de imagem e
       animação Entidades em ./Entities_/Base_.py
+}
+
+TODO: {
+      Compra de mapas tipo forager,
+      Árvores,
+      Pedras,
+      Mirtilo,
+      Animais,
+      Dimensões tipo: {
+            Idade da pedra,
+            Era médieval,
+            Era pandêmica,
+            Era da Tecnologia,
+            Era robótica,
+            Revolução robótica,
+            Era médieval robótica,
+            Era pandêmica robótica (atual),
+            Era pacífica robótica,
+            Aliens chegam no planeta e começam uma batalha épica
+      },
+      Minérios tipo: {
+            Carvão,
+            Ferro,
+            Cobre,
+            Ouro,
+            Tugstênio,
+            Titânio,
+            Minérios especiais tipo: {
+                  Esmeralda,
+                  Ruby,
+                  Safira,
+                  Topazio,
+                  Diamante
+            }
+      },
+      Robôs tipo: {
+            Lutador tipo: {},
+            Trabalhador tipo: {},
+            Treinador tipo: {},
+            Possuem Poderes tipo: {
+                  Laser (Derreter algo),
+                  Fogo,
+                  Água,
+                  Ácido,
+                  Raio (pode fornecer energia)
+            },
+      },
+      Quests com npcs robóticos que te dão robôs se você completá-las,
+      Máquinas tipo: {
+            Fornalha,
+            Forja,
+            Fábrica,
+            Treinar seu Robô
+      }
 }

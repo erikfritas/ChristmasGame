@@ -34,15 +34,26 @@ class Player_(EntitiesBase_):
             "mouse": {
                 1: {
                     'is': False,
-                    'act_down': lambda: self.windows['inventory'].ohf_click(1), # onclick
+                    'act_down': lambda: self.click_acts([
+                        lambda: self.windows['inventory'].ohf_click(1)
+                    ]), # onclick
                     'act_hold': lambda: '', #self.windows['inventory'].ohf_click(2), # onhold
-                    'act_up': lambda: self.windows['inventory'].ohf_click(3) # offclick
+                    'act_up': lambda: self.click_acts([
+                        lambda: self.windows['inventory'].ohf_click(3),
+                        lambda: self.windows['inventory'].get_itemMenu().ohf_click(1)
+                    ]) # offclick
                 },
                 3: {
                     'is': False,
-                    'act_down': lambda: self.windows['inventory'].ohf_click(4), # ongrab
-                    'act_hold': lambda: self.windows['inventory'].ohf_click(5), # onholdgrab
-                    'act_up': lambda: self.windows['inventory'].ohf_click(6) # offgrab
+                    'act_down': lambda: self.click_acts([
+                        lambda: self.windows['inventory'].ohf_click(4)
+                    ]), # ongrab
+                    'act_hold': lambda: self.click_acts([
+                        lambda: self.windows['inventory'].ohf_click(5)
+                    ]), # onholdgrab
+                    'act_up': lambda: self.click_acts([
+                        lambda: self.windows['inventory'].ohf_click(6)
+                    ]) # offgrab
                 }
             },
             "speed": 5
@@ -50,6 +61,10 @@ class Player_(EntitiesBase_):
 
         self.wait_for_click = ['key', False]
         self.wait_for_m_click = ['key', False]
+
+    def click_acts(self, acts):
+        for act in acts:
+            act()
 
     def update(self):
         for e in self.keys['move'].keys():
