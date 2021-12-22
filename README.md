@@ -12,7 +12,7 @@
 <p>"December 12 23:02": Inventory system part 4 -> "ItemMenu 75% completed (button system added in it)"</p>
 <p>"December 13 18:35": Training pixel art...</p>
 <p>"December 15 20:02": Making a spritesheet...</p>
-<p>"December 21 23:54": I just went through a burnout, as I had a lot of difficulty drawing sprites at first, but I'm doing well (in my opinion)</p>
+<p>"December 21 23:54": I just went through a burnout, as I had a lot of difficulty drawing sprites at first, but I'm doing well (in my opinion), take a look at /res/practice_2.png</p>
 <p>TODO File: <a href="./TODO.txt">open</a></p>
 
 
