@@ -4,19 +4,19 @@ from Entities_.EntitiesBase_ import EntitiesBase_
 from Windows_.Inventory_ import Inventory_
 
 class Player_(EntitiesBase_):
-    def __init__(self, surface, name, rect, skin, types={}):
+    def __init__(self, surface, name, rect, skin, scale, spriteBase, types={}):
         windows = {
             'inventory': Inventory_(surface)
         }
 
-        super().__init__(surface, name, rect, skin, types, windows)
+        super().__init__(surface, name, rect, skin, scale, spriteBase, types, windows)
 
         self.keys = {
             "move": {
-                K_w: {'is': False, 'pos': 'y', 'side': 'top'},
-                K_s: {'is': False, 'pos': 'y', 'side': 'bottom'},
-                K_a: {'is': False, 'pos': 'x', 'side': 'left'},
-                K_d: {'is': False, 'pos': 'x', 'side': 'right'}
+                K_w: {'is': False, 'pos': 1, 'side': 'top'},
+                K_s: {'is': False, 'pos': 1, 'side': 'bottom'},
+                K_a: {'is': False, 'pos': 0, 'side': 'left'},
+                K_d: {'is': False, 'pos': 0, 'side': 'right'}
             },
             "tomove": {
                 K_w: lambda y, speed: y - speed,
@@ -67,28 +67,30 @@ class Player_(EntitiesBase_):
             act()
 
     def update(self):
+        self.status = 'idle'
         for e in self.keys['move'].keys():
             if self.keys['move'][e]['is']:
-                if self.keys['move'][e]['pos'] == 'y' and self.keys['move'][e]['side'] != self.xy[1]:
-                    self.rect[1] = self.keys['tomove'][e](self.rect[1], self.keys['speed'])
-                elif self.keys['move'][e]['pos'] == 'x' and self.keys['move'][e]['side'] != self.xy[0]:
-                    self.rect[0] = self.keys['tomove'][e](self.rect[0], self.keys['speed'])
+                pos = self.keys['move'][e]['pos']
+                if self.keys['move'][e]['side'] != self.xy[pos]:
+                    self.rect[pos] = self.keys['tomove'][e](self.rect[pos], self.keys['speed'])
+                    self.status = self.keys['move'][e]['side']
 
         for e in self.keys['actions'].keys():
             if self.keys['actions'][e]['is']:
                 self.keys['actions'][e]['act_down']()
                 self.wait_for_click = [e, True]
-            elif not self.keys['actions'][e]['is'] and e == self.wait_for_click[0] and self.wait_for_click[1]:
+            elif e == self.wait_for_click[0] and self.wait_for_click[1]:
                 self.keys['actions'][e]['act_up']()
                 self.wait_for_click = [e, False]
         
         for e in self.keys['mouse'].keys():
-            if self.keys['mouse'][e]['is'] and not self.wait_for_m_click[1]:
-                self.keys['mouse'][e]['act_down']()
-                self.wait_for_m_click = [e, True]
-            elif self.keys['mouse'][e]['is'] and e == self.wait_for_m_click[0]:
-                self.keys['mouse'][e]['act_hold']()
-            elif not self.keys['mouse'][e]['is'] and e == self.wait_for_m_click[0] and self.wait_for_m_click[1]:
+            if self.keys['mouse'][e]['is']:
+                if not self.wait_for_m_click[1]:
+                    self.keys['mouse'][e]['act_down']()
+                    self.wait_for_m_click = [e, True]
+                elif e == self.wait_for_m_click[0]:
+                    self.keys['mouse'][e]['act_hold']()
+            elif e == self.wait_for_m_click[0] and self.wait_for_m_click[1]:
                 self.keys['mouse'][e]['act_up']()
                 self.wait_for_m_click = [e, False]
 

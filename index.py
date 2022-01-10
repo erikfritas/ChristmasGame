@@ -1,4 +1,3 @@
-from random import random
 from modules.configs import *
 
 # /var/www/html/python/jogos/ChristmasGame
@@ -16,11 +15,23 @@ class Game:
                 ] # blocks
             ],
             [ # z-index: 1 == entities
-                [
-                    Player_(screen, "Player 1", [200, 200, 50, 50], skin=(255, 255, 255),
-                    types={
-                        'collider': True
-                    })
+                [ # x7 y7 w8 h24
+                    Player_(
+                        screen, "Player 1", [200, 200, 35, 100], skin=[
+                            ['entity/player/',{
+                                'right': ['right_1.png', 'right_2.png'],
+                                'left': ['left_1.png', 'left_2.png'],
+                                'top': ['top_1.png', 'top_2.png'],
+                                'bottom': ['bottom_1.png', 'bottom_2.png'],
+                                'idle': ['idle_1.png', 'idle_2.png']
+                            }, 35, 35]
+                        ],
+                        scale=15,
+                        spriteBase=SpritePlayer_,
+                        types={
+                            'collider': True
+                        }
+                    )
                 ], # players
                 [], # npcs
                 [], # enemies
@@ -32,14 +43,15 @@ class Game:
         ]
 
     def draw(self):
-        screen.fill((0, 0, 10))
-        self.fps = text(fonte("Arial", 20), f'{int(clock.get_fps())}')
-        screen.blit(self.fps, (SCREEN["sw"]()-self.fps.get_width()-10, 10))
+        screen.fill((40, 40, 75))
 
         for obj in self.objs:
             for o in obj:
                 for z_index in o:
                     z_index.draw()
+        
+        self.fps = text(fonte("Arial", 20), f'{int(clock.get_fps())}')
+        screen.blit(self.fps, (SCREEN["sw"]()-self.fps.get_width()-10, 10))
 
     def update(self):
         clock.tick(58)
@@ -61,8 +73,8 @@ class Game:
                 el.update()
 
         # Timers
-        #if clock.get_fps() >= 5: # loaded
-            #utils.timer_per_second(1, lambda: print(clock.get_fps()), clock.get_fps())
+        # if clock.get_fps() >= 5: # loaded
+        #     utils.timer_per_second(1, lambda: print('I'), clock.get_fps())
 
     def loop(self):
         while True:

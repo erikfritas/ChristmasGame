@@ -21,6 +21,12 @@ Description: {
       uma ação em um tempo específico
 }
 
+TODO: Sistema de SpriteSheet e Animações
+Description: {
+      Criar spritesheet com pikopixel,
+      Implementar usando uma classe de SpriteSheet
+}
+
 Almost done: Menu do Item
 Description: {
       Nome do item,

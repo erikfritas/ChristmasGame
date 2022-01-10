@@ -8,6 +8,7 @@ from Entities_.Player_ import Player_
 from Maps_.MapBase_ import MapBase_
 from Blocks_.Tree_ import Tree_
 from Windows_.Inventory_ import Inventory_
+from SpriteSheet_.SpritePlayer_ import SpritePlayer_
 
 clock = pg.time.Clock()
 
@@ -20,7 +21,7 @@ info = pg.display.Info()
 # WINDOW
 WINDOW_SIZE = [info.current_w, info.current_h-50]
 screen = pg.display.set_mode(WINDOW_SIZE)
-
+pg.display.set_caption('ChristmasGame - by erikfritas')
 
 # Fonts
 fonte_size_default = 0

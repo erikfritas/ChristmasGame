@@ -1,22 +1,27 @@
 import pygame as pg
 from pygame.locals import *
-from modules.utils import collidelist
+from modules.utils import collidelist, timer_per_second
 
 class EntitiesBase_:
-    def __init__(self, surface, name, rect, skin, types={}, windows=None):
+    def __init__(self, surface, name, rect, skin, scale, spriteBase, types={}, windows=None):
         self.name = name
         self.rect = rect
         self.skin = skin
+        self.scale = scale
         self.types = types
         self.surface = surface
         self.colliding = False
         self.xy = ["not", "not"]
+        # [1 (doing), 'side' (side)]
+        # ex: [1 (idle), 'right']
+        self.status = 'right'
 
         if type(self.skin) is tuple:
             self.render = lambda: pg.draw.rect(self.surface, self.skin, self.rect)
         else:
-            img = pg.image.load(self.skin)
-            self.render = lambda: self.surface.blit(img, (self.rect[0], self.rect[1]))
+            self.sprite = spriteBase(self.surface, self.skin, self.rect, self.scale)
+
+            self.render = lambda: self.sprite.animate(self.status)
 
         self.windows = windows
         self.window_update = lambda: ''
