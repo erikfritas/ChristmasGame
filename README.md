@@ -13,6 +13,7 @@
 <p>"December 13 18:35": Training pixel art...</p>
 <p>"December 15 20:02": Making a spritesheet...</p>
 <p>"December 21 23:54": I just went through a burnout, as I had a lot of difficulty drawing sprites at first, but I'm doing well (in my opinion), take a look at /res/practice_2.png</p>
+<p>"January 10 20:10": I returned to the project, sprite animation -> "Player animations 75% completed"</p>
 <p>TODO File: <a href="./TODO.txt">open</a></p>
 
 
